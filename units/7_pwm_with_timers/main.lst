@@ -120,19 +120,29 @@
  132               	.LM24:
  133 0060 9BBD      		out (74)+1-32,r25
  134 0062 8ABD      		out 74-32,r24
- 135 0064 00C0      		rjmp .L8
- 136               	.LFE8:
- 178               	.Letext0:
+ 135               	.LM25:
+ 136 0064 81E0      		ldi r24,lo8(1)
+ 137 0066 00D0      		rcall ADC_result
+ 138 0068 9695      		lsr r25
+ 139 006a 8795      		ror r24
+ 140 006c 9695      		lsr r25
+ 141 006e 8795      		ror r24
+ 142               	.LM26:
+ 143 0070 99BD      		out (72)+1-32,r25
+ 144 0072 88BD      		out 72-32,r24
+ 145 0074 00C0      		rjmp .L8
+ 146               	.LFE8:
+ 188               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:2      *ABS*:0000003f __SREG__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:3      *ABS*:0000003e __SP_H__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:4      *ABS*:0000003d __SP_L__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:5      *ABS*:00000034 __CCP__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:18     .text:00000000 ADC_init
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:35     .text:00000008 ADC_result
-C:\Users\admin\AppData\Local\Temp/ccxZee6F.s:83     .text:00000026 main
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:2      *ABS*:0000003f __SREG__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:3      *ABS*:0000003e __SP_H__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:4      *ABS*:0000003d __SP_L__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:5      *ABS*:00000034 __CCP__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:18     .text:00000000 ADC_init
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:35     .text:00000008 ADC_result
+C:\Users\vladi\AppData\Local\Temp/ccf2n29v.s:83     .text:00000026 main
 
 NO UNDEFINED SYMBOLS

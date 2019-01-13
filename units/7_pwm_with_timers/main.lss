@@ -3,23 +3,23 @@ main.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000000a2  00000000  00000000  00000054  2**1
+  0 .text         000000b2  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .debug_aranges 00000020  00000000  00000000  000000f6  2**0
+  1 .debug_aranges 00000020  00000000  00000000  00000106  2**0
                   CONTENTS, READONLY, DEBUGGING
-  2 .debug_pubnames 00000037  00000000  00000000  00000116  2**0
+  2 .debug_pubnames 00000037  00000000  00000000  00000126  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_info   000001d2  00000000  00000000  0000014d  2**0
+  3 .debug_info   000001d2  00000000  00000000  0000015d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 00000119  00000000  00000000  0000031f  2**0
+  4 .debug_abbrev 00000119  00000000  00000000  0000032f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   000001a2  00000000  00000000  00000438  2**0
+  5 .debug_line   000001b2  00000000  00000000  00000448  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_frame  00000040  00000000  00000000  000005dc  2**2
+  6 .debug_frame  00000040  00000000  00000000  000005fc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    000000f3  00000000  00000000  0000061c  2**0
+  7 .debug_str    000000f8  00000000  00000000  0000063c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_loc    00000026  00000000  00000000  0000070f  2**0
+  8 .debug_loc    00000026  00000000  00000000  00000734  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -53,7 +53,7 @@ Disassembly of section .text:
   2e:	de bf       	out	0x3e, r29	; 62
   30:	cd bf       	out	0x3d, r28	; 61
   32:	15 d0       	rcall	.+42     	; 0x5e <main>
-  34:	34 c0       	rjmp	.+104    	; 0x9e <_exit>
+  34:	3c c0       	rjmp	.+120    	; 0xae <_exit>
 
 00000036 <__bad_interrupt>:
   36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
@@ -167,10 +167,20 @@ void ADC_init()
 		OCR1A = val;
   98:	9b bd       	out	0x2b, r25	; 43
   9a:	8a bd       	out	0x2a, r24	; 42
-  9c:	f7 cf       	rjmp	.-18     	; 0x8c <main+0x2e>
+		val = ADC_result(1)/4;
+  9c:	81 e0       	ldi	r24, 0x01	; 1
+  9e:	d0 df       	rcall	.-96     	; 0x40 <ADC_result>
+  a0:	96 95       	lsr	r25
+  a2:	87 95       	ror	r24
+  a4:	96 95       	lsr	r25
+  a6:	87 95       	ror	r24
+		OCR1B = val;
+  a8:	99 bd       	out	0x29, r25	; 41
+  aa:	88 bd       	out	0x28, r24	; 40
+  ac:	ef cf       	rjmp	.-34     	; 0x8c <main+0x2e>
 
-0000009e <_exit>:
-  9e:	f8 94       	cli
+000000ae <_exit>:
+  ae:	f8 94       	cli
 
-000000a0 <__stop_program>:
-  a0:	ff cf       	rjmp	.-2      	; 0xa0 <__stop_program>
+000000b0 <__stop_program>:
+  b0:	ff cf       	rjmp	.-2      	; 0xb0 <__stop_program>
