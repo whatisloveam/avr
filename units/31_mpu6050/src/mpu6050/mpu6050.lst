@@ -1,0 +1,1138 @@
+   1               		.file	"mpu6050.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	mpu6050_writeBytes
+  18               	mpu6050_writeBytes:
+  19               	.LFB8:
+  20               	.LM1:
+  21               	.LVL0:
+  22 0000 EF92      		push r14
+  23 0002 FF92      		push r15
+  24 0004 0F93      		push r16
+  25 0006 1F93      		push r17
+  26 0008 CF93      		push r28
+  27 000a DF93      		push r29
+  28               	/* prologue: function */
+  29               	/* frame size = 0 */
+  30 000c 182F      		mov r17,r24
+  31 000e E62E      		mov r14,r22
+  32 0010 042F      		mov r16,r20
+  33 0012 F52E      		mov r15,r21
+  34               	.LVL1:
+  35               	.LM2:
+  36 0014 6623      		tst r22
+  37 0016 01F0      		breq .L5
+  38               	.LVL2:
+  39               	.LM3:
+  40 0018 80ED      		ldi r24,lo8(-48)
+  41 001a 00D0      		rcall i2c_start
+  42               	.LVL3:
+  43               	.LM4:
+  44 001c 812F      		mov r24,r17
+  45 001e 00D0      		rcall i2c_write
+  46 0020 802F      		mov r24,r16
+  47 0022 9F2D      		mov r25,r15
+  48 0024 9C01      		movw r18,r24
+  49 0026 E901      		movw r28,r18
+  50 0028 10E0      		ldi r17,lo8(0)
+  51               	.LVL4:
+  52 002a 00C0      		rjmp .L3
+  53               	.L4:
+  54               	.LBB46:
+  55               	.LM5:
+  56 002c 8991      		ld r24,Y+
+  57 002e 00D0      		rcall i2c_write
+  58               	.LM6:
+  59 0030 1F5F      		subi r17,lo8(-(1))
+  60               	.L3:
+  61 0032 1E15      		cp r17,r14
+  62 0034 00F0      		brlo .L4
+  63               	.LBE46:
+  64               	.LM7:
+  65 0036 00D0      		rcall i2c_stop
+  66               	.LVL5:
+  67               	.L5:
+  68               	/* epilogue start */
+  69               	.LM8:
+  70 0038 DF91      		pop r29
+  71 003a CF91      		pop r28
+  72 003c 1F91      		pop r17
+  73               	.LVL6:
+  74 003e 0F91      		pop r16
+  75               	.LVL7:
+  76 0040 FF90      		pop r15
+  77               	.LVL8:
+  78 0042 EF90      		pop r14
+  79               	.LVL9:
+  80 0044 0895      		ret
+  81               	.LFE8:
+  83               	.global	mpu6050_writeByte
+  85               	mpu6050_writeByte:
+  86               	.LFB9:
+  87               	.LM9:
+  88               	.LVL10:
+  89 0046 DF93      		push r29
+  90 0048 CF93      		push r28
+  91 004a 0F92      		push __tmp_reg__
+  92 004c CDB7      		in r28,__SP_L__
+  93 004e DEB7      		in r29,__SP_H__
+  94               	/* prologue: function */
+  95               	/* frame size = 1 */
+  96 0050 6983      		std Y+1,r22
+  97               	.LM10:
+  98 0052 61E0      		ldi r22,lo8(1)
+  99               	.LVL11:
+ 100 0054 AE01      		movw r20,r28
+ 101 0056 4F5F      		subi r20,lo8(-(1))
+ 102 0058 5F4F      		sbci r21,hi8(-(1))
+ 103 005a 00D0      		rcall mpu6050_writeBytes
+ 104               	.LVL12:
+ 105               	/* epilogue start */
+ 106               	.LM11:
+ 107 005c 0F90      		pop __tmp_reg__
+ 108 005e CF91      		pop r28
+ 109 0060 DF91      		pop r29
+ 110 0062 0895      		ret
+ 111               	.LFE9:
+ 113               	.global	mpu6050_readBytes
+ 115               	mpu6050_readBytes:
+ 116               	.LFB6:
+ 117               	.LM12:
+ 118               	.LVL13:
+ 119 0064 DF92      		push r13
+ 120 0066 EF92      		push r14
+ 121 0068 FF92      		push r15
+ 122 006a 0F93      		push r16
+ 123 006c 1F93      		push r17
+ 124 006e CF93      		push r28
+ 125 0070 DF93      		push r29
+ 126               	/* prologue: function */
+ 127               	/* frame size = 0 */
+ 128 0072 182F      		mov r17,r24
+ 129 0074 D62E      		mov r13,r22
+ 130 0076 042F      		mov r16,r20
+ 131 0078 F52E      		mov r15,r21
+ 132               	.LVL14:
+ 133               	.LM13:
+ 134 007a 6623      		tst r22
+ 135 007c 01F4      		brne .L9
+ 136               	.LVL15:
+ 137 007e 10E0      		ldi r17,lo8(0)
+ 138               	.LVL16:
+ 139 0080 00C0      		rjmp .L10
+ 140               	.LVL17:
+ 141               	.L9:
+ 142               	.LM14:
+ 143 0082 80ED      		ldi r24,lo8(-48)
+ 144 0084 00D0      		rcall i2c_start
+ 145               	.LVL18:
+ 146               	.LM15:
+ 147 0086 812F      		mov r24,r17
+ 148 0088 00D0      		rcall i2c_write
+ 149               	.LBB47:
+ 150               	.LBB48:
+ 151               	.LBB49:
+ 152               	.LBB50:
+ 153               	.LM16:
+ 154 008a 8AE1      		ldi r24,lo8(26)
+ 155               	.LVL19:
+ 156               	/* #APP */
+ 157               	 ;  83 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 158 008c 8A95      		1: dec r24
+ 159 008e 01F4      		brne 1b
+ 160               	 ;  0 "" 2
+ 161               	/* #NOAPP */
+ 162               	.LBE50:
+ 163               	.LBE49:
+ 164               	.LBE48:
+ 165               	.LBE47:
+ 166               	.LM17:
+ 167 0090 81ED      		ldi r24,lo8(-47)
+ 168               	.LVL20:
+ 169 0092 00D0      		rcall i2c_start
+ 170 0094 802F      		mov r24,r16
+ 171 0096 9F2D      		mov r25,r15
+ 172 0098 9C01      		movw r18,r24
+ 173 009a 8901      		movw r16,r18
+ 174               	.LVL21:
+ 175 009c C0E0      		ldi r28,lo8(0)
+ 176 009e D0E0      		ldi r29,hi8(0)
+ 177               	.LM18:
+ 178 00a0 ED2C      		mov r14,r13
+ 179 00a2 FF24      		clr r15
+ 180               	.LVL22:
+ 181 00a4 0894      		sec
+ 182 00a6 E108      		sbc r14,__zero_reg__
+ 183 00a8 F108      		sbc r15,__zero_reg__
+ 184 00aa 00C0      		rjmp .L11
+ 185               	.L14:
+ 186 00ac CE15      		cp r28,r14
+ 187 00ae DF05      		cpc r29,r15
+ 188 00b0 01F4      		brne .L12
+ 189               	.LM19:
+ 190 00b2 00D0      		rcall i2c_readNak
+ 191 00b4 00C0      		rjmp .L16
+ 192               	.L12:
+ 193               	.LM20:
+ 194 00b6 00D0      		rcall i2c_readAck
+ 195               	.L16:
+ 196 00b8 F801      		movw r30,r16
+ 197 00ba 8083      		st Z,r24
+ 198 00bc 2196      		adiw r28,1
+ 199 00be 0F5F      		subi r16,lo8(-(1))
+ 200 00c0 1F4F      		sbci r17,hi8(-(1))
+ 201               	.L11:
+ 202               	.LM21:
+ 203 00c2 CD15      		cp r28,r13
+ 204 00c4 00F0      		brlo .L14
+ 205 00c6 1D2D      		mov r17,r13
+ 206               	.LVL23:
+ 207               	.LM22:
+ 208 00c8 00D0      		rcall i2c_stop
+ 209               	.LVL24:
+ 210               	.L10:
+ 211               	.LM23:
+ 212 00ca 812F      		mov r24,r17
+ 213               	.LVL25:
+ 214               	/* epilogue start */
+ 215 00cc DF91      		pop r29
+ 216 00ce CF91      		pop r28
+ 217 00d0 1F91      		pop r17
+ 218               	.LVL26:
+ 219 00d2 0F91      		pop r16
+ 220               	.LVL27:
+ 221 00d4 FF90      		pop r15
+ 222               	.LVL28:
+ 223 00d6 EF90      		pop r14
+ 224 00d8 DF90      		pop r13
+ 225               	.LVL29:
+ 226 00da 0895      		ret
+ 227               	.LFE6:
+ 229               	.global	mpu6050_getRawData
+ 231               	mpu6050_getRawData:
+ 232               	.LFB18:
+ 233               	.LM24:
+ 234               	.LVL30:
+ 235 00dc 6F92      		push r6
+ 236 00de 7F92      		push r7
+ 237 00e0 8F92      		push r8
+ 238 00e2 9F92      		push r9
+ 239 00e4 AF92      		push r10
+ 240 00e6 BF92      		push r11
+ 241 00e8 CF92      		push r12
+ 242 00ea DF92      		push r13
+ 243 00ec EF92      		push r14
+ 244               	.LVL31:
+ 245 00ee FF92      		push r15
+ 246 00f0 0F93      		push r16
+ 247               	.LVL32:
+ 248 00f2 1F93      		push r17
+ 249               	/* prologue: function */
+ 250               	/* frame size = 0 */
+ 251 00f4 6C01      		movw r12,r24
+ 252 00f6 5B01      		movw r10,r22
+ 253 00f8 4A01      		movw r8,r20
+ 254 00fa 3901      		movw r6,r18
+ 255               	.LM25:
+ 256 00fc 8BE3      		ldi r24,lo8(59)
+ 257               	.LVL33:
+ 258 00fe 6EE0      		ldi r22,lo8(14)
+ 259               	.LVL34:
+ 260 0100 40E0      		ldi r20,lo8(buffer)
+ 261 0102 50E0      		ldi r21,hi8(buffer)
+ 262               	.LVL35:
+ 263 0104 00D0      		rcall mpu6050_readBytes
+ 264               	.LVL36:
+ 265               	.LM26:
+ 266 0106 4091 0000 		lds r20,buffer
+ 267 010a 2091 0000 		lds r18,buffer+1
+ 268 010e 942F      		mov r25,r20
+ 269 0110 80E0      		ldi r24,lo8(0)
+ 270 0112 30E0      		ldi r19,lo8(0)
+ 271 0114 822B      		or r24,r18
+ 272 0116 932B      		or r25,r19
+ 273 0118 F601      		movw r30,r12
+ 274 011a 9183      		std Z+1,r25
+ 275 011c 8083      		st Z,r24
+ 276               	.LM27:
+ 277 011e 4091 0000 		lds r20,buffer+2
+ 278 0122 2091 0000 		lds r18,buffer+3
+ 279 0126 942F      		mov r25,r20
+ 280 0128 80E0      		ldi r24,lo8(0)
+ 281 012a 30E0      		ldi r19,lo8(0)
+ 282 012c 822B      		or r24,r18
+ 283 012e 932B      		or r25,r19
+ 284 0130 F501      		movw r30,r10
+ 285 0132 9183      		std Z+1,r25
+ 286 0134 8083      		st Z,r24
+ 287               	.LM28:
+ 288 0136 4091 0000 		lds r20,buffer+4
+ 289 013a 2091 0000 		lds r18,buffer+5
+ 290 013e 942F      		mov r25,r20
+ 291 0140 80E0      		ldi r24,lo8(0)
+ 292 0142 30E0      		ldi r19,lo8(0)
+ 293 0144 822B      		or r24,r18
+ 294 0146 932B      		or r25,r19
+ 295 0148 F401      		movw r30,r8
+ 296 014a 9183      		std Z+1,r25
+ 297 014c 8083      		st Z,r24
+ 298               	.LM29:
+ 299 014e 4091 0000 		lds r20,buffer+8
+ 300 0152 2091 0000 		lds r18,buffer+9
+ 301 0156 942F      		mov r25,r20
+ 302 0158 80E0      		ldi r24,lo8(0)
+ 303 015a 30E0      		ldi r19,lo8(0)
+ 304 015c 822B      		or r24,r18
+ 305 015e 932B      		or r25,r19
+ 306 0160 F301      		movw r30,r6
+ 307 0162 9183      		std Z+1,r25
+ 308 0164 8083      		st Z,r24
+ 309               	.LM30:
+ 310 0166 4091 0000 		lds r20,buffer+10
+ 311 016a 2091 0000 		lds r18,buffer+11
+ 312 016e 942F      		mov r25,r20
+ 313 0170 80E0      		ldi r24,lo8(0)
+ 314 0172 30E0      		ldi r19,lo8(0)
+ 315 0174 822B      		or r24,r18
+ 316 0176 932B      		or r25,r19
+ 317 0178 F801      		movw r30,r16
+ 318               	.LVL37:
+ 319 017a 9183      		std Z+1,r25
+ 320 017c 8083      		st Z,r24
+ 321               	.LM31:
+ 322 017e 4091 0000 		lds r20,buffer+12
+ 323 0182 2091 0000 		lds r18,buffer+13
+ 324 0186 942F      		mov r25,r20
+ 325 0188 80E0      		ldi r24,lo8(0)
+ 326 018a 30E0      		ldi r19,lo8(0)
+ 327 018c 822B      		or r24,r18
+ 328 018e 932B      		or r25,r19
+ 329 0190 F701      		movw r30,r14
+ 330               	.LVL38:
+ 331 0192 9183      		std Z+1,r25
+ 332 0194 8083      		st Z,r24
+ 333               	/* epilogue start */
+ 334               	.LM32:
+ 335 0196 1F91      		pop r17
+ 336 0198 0F91      		pop r16
+ 337               	.LVL39:
+ 338 019a FF90      		pop r15
+ 339 019c EF90      		pop r14
+ 340               	.LVL40:
+ 341 019e DF90      		pop r13
+ 342 01a0 CF90      		pop r12
+ 343               	.LVL41:
+ 344 01a2 BF90      		pop r11
+ 345 01a4 AF90      		pop r10
+ 346               	.LVL42:
+ 347 01a6 9F90      		pop r9
+ 348 01a8 8F90      		pop r8
+ 349               	.LVL43:
+ 350 01aa 7F90      		pop r7
+ 351 01ac 6F90      		pop r6
+ 352               	.LVL44:
+ 353 01ae 0895      		ret
+ 354               	.LFE18:
+ 356               	.global	mpu6050_getConvData
+ 358               	mpu6050_getConvData:
+ 359               	.LFB19:
+ 360               	.LM33:
+ 361               	.LVL45:
+ 362 01b0 2F92      		push r2
+ 363 01b2 3F92      		push r3
+ 364 01b4 4F92      		push r4
+ 365 01b6 5F92      		push r5
+ 366 01b8 6F92      		push r6
+ 367 01ba 7F92      		push r7
+ 368 01bc 8F92      		push r8
+ 369 01be 9F92      		push r9
+ 370 01c0 AF92      		push r10
+ 371 01c2 BF92      		push r11
+ 372 01c4 CF92      		push r12
+ 373 01c6 DF92      		push r13
+ 374 01c8 EF92      		push r14
+ 375               	.LVL46:
+ 376 01ca FF92      		push r15
+ 377 01cc 0F93      		push r16
+ 378               	.LVL47:
+ 379 01ce 1F93      		push r17
+ 380 01d0 DF93      		push r29
+ 381 01d2 CF93      		push r28
+ 382 01d4 CDB7      		in r28,__SP_L__
+ 383 01d6 DEB7      		in r29,__SP_H__
+ 384 01d8 2C97      		sbiw r28,12
+ 385 01da 0FB6      		in __tmp_reg__,__SREG__
+ 386 01dc F894      		cli
+ 387 01de DEBF      		out __SP_H__,r29
+ 388 01e0 0FBE      		out __SREG__,__tmp_reg__
+ 389 01e2 CDBF      		out __SP_L__,r28
+ 390               	/* prologue: function */
+ 391               	/* frame size = 12 */
+ 392 01e4 6C01      		movw r12,r24
+ 393 01e6 5B01      		movw r10,r22
+ 394 01e8 4A01      		movw r8,r20
+ 395 01ea 3901      		movw r6,r18
+ 396 01ec 2801      		movw r4,r16
+ 397               	.LVL48:
+ 398 01ee 1701      		movw r2,r14
+ 399               	.LVL49:
+ 400               	.LM34:
+ 401 01f0 1A82      		std Y+2,__zero_reg__
+ 402 01f2 1982      		std Y+1,__zero_reg__
+ 403               	.LVL50:
+ 404               	.LM35:
+ 405 01f4 1C82      		std Y+4,__zero_reg__
+ 406 01f6 1B82      		std Y+3,__zero_reg__
+ 407               	.LVL51:
+ 408               	.LM36:
+ 409 01f8 1E82      		std Y+6,__zero_reg__
+ 410 01fa 1D82      		std Y+5,__zero_reg__
+ 411               	.LVL52:
+ 412               	.LM37:
+ 413 01fc 1886      		std Y+8,__zero_reg__
+ 414 01fe 1F82      		std Y+7,__zero_reg__
+ 415               	.LVL53:
+ 416               	.LM38:
+ 417 0200 1A86      		std Y+10,__zero_reg__
+ 418 0202 1986      		std Y+9,__zero_reg__
+ 419               	.LVL54:
+ 420               	.LM39:
+ 421 0204 1C86      		std Y+12,__zero_reg__
+ 422 0206 1B86      		std Y+11,__zero_reg__
+ 423               	.LVL55:
+ 424               	.LM40:
+ 425 0208 CE01      		movw r24,r28
+ 426               	.LVL56:
+ 427 020a 0196      		adiw r24,1
+ 428 020c BE01      		movw r22,r28
+ 429               	.LVL57:
+ 430 020e 6D5F      		subi r22,lo8(-(3))
+ 431 0210 7F4F      		sbci r23,hi8(-(3))
+ 432 0212 AE01      		movw r20,r28
+ 433               	.LVL58:
+ 434 0214 4B5F      		subi r20,lo8(-(5))
+ 435 0216 5F4F      		sbci r21,hi8(-(5))
+ 436 0218 9E01      		movw r18,r28
+ 437               	.LVL59:
+ 438 021a 295F      		subi r18,lo8(-(7))
+ 439 021c 3F4F      		sbci r19,hi8(-(7))
+ 440 021e 8E01      		movw r16,r28
+ 441               	.LVL60:
+ 442 0220 075F      		subi r16,lo8(-(9))
+ 443 0222 1F4F      		sbci r17,hi8(-(9))
+ 444 0224 EBE0      		ldi r30,lo8(11)
+ 445 0226 EE2E      		mov r14,r30
+ 446 0228 F12C      		mov r15,__zero_reg__
+ 447               	.LVL61:
+ 448 022a EC0E      		add r14,r28
+ 449 022c FD1E      		adc r15,r29
+ 450 022e 00D0      		rcall mpu6050_getRawData
+ 451               	.LM41:
+ 452 0230 6981      		ldd r22,Y+1
+ 453 0232 7A81      		ldd r23,Y+2
+ 454 0234 8827      		clr r24
+ 455 0236 77FD      		sbrc r23,7
+ 456 0238 8095      		com r24
+ 457 023a 982F      		mov r25,r24
+ 458               	.LVL62:
+ 459 023c 00D0      		rcall __floatsisf
+ 460               	.LVL63:
+ 461 023e 20E0      		ldi r18,lo8(0x38800000)
+ 462 0240 30E0      		ldi r19,hi8(0x38800000)
+ 463 0242 40E8      		ldi r20,hlo8(0x38800000)
+ 464 0244 58E3      		ldi r21,hhi8(0x38800000)
+ 465 0246 00D0      		rcall __mulsf3
+ 466 0248 F601      		movw r30,r12
+ 467 024a 6083      		st Z,r22
+ 468 024c 7183      		std Z+1,r23
+ 469 024e 8283      		std Z+2,r24
+ 470 0250 9383      		std Z+3,r25
+ 471               	.LM42:
+ 472 0252 6B81      		ldd r22,Y+3
+ 473 0254 7C81      		ldd r23,Y+4
+ 474 0256 8827      		clr r24
+ 475 0258 77FD      		sbrc r23,7
+ 476 025a 8095      		com r24
+ 477 025c 982F      		mov r25,r24
+ 478               	.LVL64:
+ 479 025e 00D0      		rcall __floatsisf
+ 480               	.LVL65:
+ 481 0260 20E0      		ldi r18,lo8(0x38800000)
+ 482 0262 30E0      		ldi r19,hi8(0x38800000)
+ 483 0264 40E8      		ldi r20,hlo8(0x38800000)
+ 484 0266 58E3      		ldi r21,hhi8(0x38800000)
+ 485 0268 00D0      		rcall __mulsf3
+ 486 026a F501      		movw r30,r10
+ 487 026c 6083      		st Z,r22
+ 488 026e 7183      		std Z+1,r23
+ 489 0270 8283      		std Z+2,r24
+ 490 0272 9383      		std Z+3,r25
+ 491               	.LM43:
+ 492 0274 6D81      		ldd r22,Y+5
+ 493 0276 7E81      		ldd r23,Y+6
+ 494 0278 8827      		clr r24
+ 495 027a 77FD      		sbrc r23,7
+ 496 027c 8095      		com r24
+ 497 027e 982F      		mov r25,r24
+ 498               	.LVL66:
+ 499 0280 00D0      		rcall __floatsisf
+ 500               	.LVL67:
+ 501 0282 20E0      		ldi r18,lo8(0x38800000)
+ 502 0284 30E0      		ldi r19,hi8(0x38800000)
+ 503 0286 40E8      		ldi r20,hlo8(0x38800000)
+ 504 0288 58E3      		ldi r21,hhi8(0x38800000)
+ 505 028a 00D0      		rcall __mulsf3
+ 506 028c F401      		movw r30,r8
+ 507 028e 6083      		st Z,r22
+ 508 0290 7183      		std Z+1,r23
+ 509 0292 8283      		std Z+2,r24
+ 510 0294 9383      		std Z+3,r25
+ 511               	.LM44:
+ 512 0296 6F81      		ldd r22,Y+7
+ 513 0298 7885      		ldd r23,Y+8
+ 514 029a 665D      		subi r22,lo8(-(42))
+ 515 029c 7F4F      		sbci r23,hi8(-(42))
+ 516               	.LVL68:
+ 517 029e 8827      		clr r24
+ 518 02a0 77FD      		sbrc r23,7
+ 519 02a2 8095      		com r24
+ 520 02a4 982F      		mov r25,r24
+ 521               	.LVL69:
+ 522 02a6 00D0      		rcall __floatsisf
+ 523 02a8 23E3      		ldi r18,lo8(0x41833333)
+ 524 02aa 33E3      		ldi r19,hi8(0x41833333)
+ 525 02ac 43E8      		ldi r20,hlo8(0x41833333)
+ 526 02ae 51E4      		ldi r21,hhi8(0x41833333)
+ 527 02b0 00D0      		rcall __divsf3
+ 528 02b2 F301      		movw r30,r6
+ 529 02b4 6083      		st Z,r22
+ 530 02b6 7183      		std Z+1,r23
+ 531 02b8 8283      		std Z+2,r24
+ 532 02ba 9383      		std Z+3,r25
+ 533               	.LM45:
+ 534 02bc 6985      		ldd r22,Y+9
+ 535 02be 7A85      		ldd r23,Y+10
+ 536 02c0 6950      		subi r22,lo8(-(-9))
+ 537 02c2 7040      		sbci r23,hi8(-(-9))
+ 538               	.LVL70:
+ 539 02c4 8827      		clr r24
+ 540 02c6 77FD      		sbrc r23,7
+ 541 02c8 8095      		com r24
+ 542 02ca 982F      		mov r25,r24
+ 543               	.LVL71:
+ 544 02cc 00D0      		rcall __floatsisf
+ 545 02ce 23E3      		ldi r18,lo8(0x41833333)
+ 546 02d0 33E3      		ldi r19,hi8(0x41833333)
+ 547 02d2 43E8      		ldi r20,hlo8(0x41833333)
+ 548 02d4 51E4      		ldi r21,hhi8(0x41833333)
+ 549 02d6 00D0      		rcall __divsf3
+ 550 02d8 F201      		movw r30,r4
+ 551 02da 6083      		st Z,r22
+ 552 02dc 7183      		std Z+1,r23
+ 553 02de 8283      		std Z+2,r24
+ 554 02e0 9383      		std Z+3,r25
+ 555               	.LM46:
+ 556 02e2 6B85      		ldd r22,Y+11
+ 557 02e4 7C85      		ldd r23,Y+12
+ 558 02e6 635E      		subi r22,lo8(-(29))
+ 559 02e8 7F4F      		sbci r23,hi8(-(29))
+ 560               	.LVL72:
+ 561 02ea 8827      		clr r24
+ 562 02ec 77FD      		sbrc r23,7
+ 563 02ee 8095      		com r24
+ 564 02f0 982F      		mov r25,r24
+ 565               	.LVL73:
+ 566 02f2 00D0      		rcall __floatsisf
+ 567 02f4 23E3      		ldi r18,lo8(0x41833333)
+ 568 02f6 33E3      		ldi r19,hi8(0x41833333)
+ 569 02f8 43E8      		ldi r20,hlo8(0x41833333)
+ 570 02fa 51E4      		ldi r21,hhi8(0x41833333)
+ 571 02fc 00D0      		rcall __divsf3
+ 572 02fe F101      		movw r30,r2
+ 573 0300 6083      		st Z,r22
+ 574 0302 7183      		std Z+1,r23
+ 575 0304 8283      		std Z+2,r24
+ 576 0306 9383      		std Z+3,r25
+ 577               	/* epilogue start */
+ 578               	.LM47:
+ 579 0308 2C96      		adiw r28,12
+ 580 030a 0FB6      		in __tmp_reg__,__SREG__
+ 581 030c F894      		cli
+ 582 030e DEBF      		out __SP_H__,r29
+ 583 0310 0FBE      		out __SREG__,__tmp_reg__
+ 584 0312 CDBF      		out __SP_L__,r28
+ 585 0314 CF91      		pop r28
+ 586 0316 DF91      		pop r29
+ 587 0318 1F91      		pop r17
+ 588 031a 0F91      		pop r16
+ 589 031c FF90      		pop r15
+ 590 031e EF90      		pop r14
+ 591 0320 DF90      		pop r13
+ 592 0322 CF90      		pop r12
+ 593               	.LVL74:
+ 594 0324 BF90      		pop r11
+ 595 0326 AF90      		pop r10
+ 596               	.LVL75:
+ 597 0328 9F90      		pop r9
+ 598 032a 8F90      		pop r8
+ 599               	.LVL76:
+ 600 032c 7F90      		pop r7
+ 601 032e 6F90      		pop r6
+ 602               	.LVL77:
+ 603 0330 5F90      		pop r5
+ 604 0332 4F90      		pop r4
+ 605               	.LVL78:
+ 606 0334 3F90      		pop r3
+ 607 0336 2F90      		pop r2
+ 608               	.LVL79:
+ 609 0338 0895      		ret
+ 610               	.LFE19:
+ 612               	.global	mpu6050_readByte
+ 614               	mpu6050_readByte:
+ 615               	.LFB7:
+ 616               	.LM48:
+ 617               	.LVL80:
+ 618               	/* prologue: function */
+ 619               	/* frame size = 0 */
+ 620 033a AB01      		movw r20,r22
+ 621               	.LM49:
+ 622 033c 61E0      		ldi r22,lo8(1)
+ 623               	.LVL81:
+ 624 033e 00D0      		rcall mpu6050_readBytes
+ 625               	.LVL82:
+ 626               	/* epilogue start */
+ 627               	.LM50:
+ 628 0340 0895      		ret
+ 629               	.LFE7:
+ 631               	.global	mpu6050_writeBit
+ 633               	mpu6050_writeBit:
+ 634               	.LFB13:
+ 635               	.LM51:
+ 636               	.LVL83:
+ 637 0342 FF92      		push r15
+ 638 0344 0F93      		push r16
+ 639 0346 1F93      		push r17
+ 640 0348 DF93      		push r29
+ 641 034a CF93      		push r28
+ 642 034c 0F92      		push __tmp_reg__
+ 643 034e CDB7      		in r28,__SP_L__
+ 644 0350 DEB7      		in r29,__SP_H__
+ 645               	/* prologue: function */
+ 646               	/* frame size = 1 */
+ 647 0352 F82E      		mov r15,r24
+ 648 0354 062F      		mov r16,r22
+ 649 0356 142F      		mov r17,r20
+ 650               	.LM52:
+ 651 0358 BE01      		movw r22,r28
+ 652               	.LVL84:
+ 653 035a 6F5F      		subi r22,lo8(-(1))
+ 654 035c 7F4F      		sbci r23,hi8(-(1))
+ 655 035e 00D0      		rcall mpu6050_readByte
+ 656               	.LVL85:
+ 657 0360 2981      		ldd r18,Y+1
+ 658               	.LVL86:
+ 659               	.LM53:
+ 660 0362 1123      		tst r17
+ 661 0364 01F0      		breq .L24
+ 662               	.LVL87:
+ 663 0366 81E0      		ldi r24,lo8(1)
+ 664 0368 90E0      		ldi r25,hi8(1)
+ 665 036a 00C0      		rjmp 2f
+ 666 036c 880F      	1:	lsl r24
+ 667 036e 991F      		rol r25
+ 668 0370 0A95      	2:	dec r16
+ 669 0372 02F4      		brpl 1b
+ 670 0374 622F      		mov r22,r18
+ 671 0376 682B      		or r22,r24
+ 672               	.LVL88:
+ 673 0378 00C0      		rjmp .L25
+ 674               	.LVL89:
+ 675               	.L24:
+ 676 037a 81E0      		ldi r24,lo8(1)
+ 677 037c 90E0      		ldi r25,hi8(1)
+ 678 037e 00C0      		rjmp 2f
+ 679 0380 880F      	1:	lsl r24
+ 680 0382 991F      		rol r25
+ 681 0384 0A95      	2:	dec r16
+ 682 0386 02F4      		brpl 1b
+ 683 0388 682F      		mov r22,r24
+ 684               	.LVL90:
+ 685 038a 6095      		com r22
+ 686 038c 6223      		and r22,r18
+ 687               	.L25:
+ 688 038e 6983      		std Y+1,r22
+ 689               	.LM54:
+ 690 0390 8F2D      		mov r24,r15
+ 691 0392 00D0      		rcall mpu6050_writeByte
+ 692               	.LVL91:
+ 693               	/* epilogue start */
+ 694               	.LM55:
+ 695 0394 0F90      		pop __tmp_reg__
+ 696 0396 CF91      		pop r28
+ 697 0398 DF91      		pop r29
+ 698 039a 1F91      		pop r17
+ 699               	.LVL92:
+ 700 039c 0F91      		pop r16
+ 701               	.LVL93:
+ 702 039e FF90      		pop r15
+ 703               	.LVL94:
+ 704 03a0 0895      		ret
+ 705               	.LFE13:
+ 707               	.global	mpu6050_setSleepEnabled
+ 709               	mpu6050_setSleepEnabled:
+ 710               	.LFB15:
+ 711               	.LM56:
+ 712               	/* prologue: function */
+ 713               	/* frame size = 0 */
+ 714               	.LM57:
+ 715 03a2 8BE6      		ldi r24,lo8(107)
+ 716 03a4 66E0      		ldi r22,lo8(6)
+ 717 03a6 41E0      		ldi r20,lo8(1)
+ 718 03a8 00D0      		rcall mpu6050_writeBit
+ 719               	/* epilogue start */
+ 720               	.LM58:
+ 721 03aa 0895      		ret
+ 722               	.LFE15:
+ 724               	.global	mpu6050_setSleepDisabled
+ 726               	mpu6050_setSleepDisabled:
+ 727               	.LFB14:
+ 728               	.LM59:
+ 729               	/* prologue: function */
+ 730               	/* frame size = 0 */
+ 731               	.LM60:
+ 732 03ac 8BE6      		ldi r24,lo8(107)
+ 733 03ae 66E0      		ldi r22,lo8(6)
+ 734 03b0 40E0      		ldi r20,lo8(0)
+ 735 03b2 00D0      		rcall mpu6050_writeBit
+ 736               	/* epilogue start */
+ 737               	.LM61:
+ 738 03b4 0895      		ret
+ 739               	.LFE14:
+ 741               	.global	mpu6050_writeBits
+ 743               	mpu6050_writeBits:
+ 744               	.LFB12:
+ 745               	.LM62:
+ 746               	.LVL95:
+ 747 03b6 EF92      		push r14
+ 748 03b8 FF92      		push r15
+ 749 03ba 0F93      		push r16
+ 750 03bc 1F93      		push r17
+ 751 03be DF93      		push r29
+ 752 03c0 CF93      		push r28
+ 753 03c2 0F92      		push __tmp_reg__
+ 754 03c4 CDB7      		in r28,__SP_L__
+ 755 03c6 DEB7      		in r29,__SP_H__
+ 756               	/* prologue: function */
+ 757               	/* frame size = 1 */
+ 758 03c8 E82E      		mov r14,r24
+ 759 03ca 062F      		mov r16,r22
+ 760 03cc 142F      		mov r17,r20
+ 761 03ce F22E      		mov r15,r18
+ 762               	.LM63:
+ 763 03d0 4423      		tst r20
+ 764 03d2 01F0      		breq .L33
+ 765               	.LVL96:
+ 766               	.LBB51:
+ 767               	.LM64:
+ 768 03d4 1982      		std Y+1,__zero_reg__
+ 769               	.LVL97:
+ 770               	.LM65:
+ 771 03d6 BE01      		movw r22,r28
+ 772 03d8 6F5F      		subi r22,lo8(-(1))
+ 773 03da 7F4F      		sbci r23,hi8(-(1))
+ 774 03dc 00D0      		rcall mpu6050_readByte
+ 775               	.LVL98:
+ 776 03de 8823      		tst r24
+ 777 03e0 01F0      		breq .L33
+ 778               	.LBB52:
+ 779               	.LM66:
+ 780 03e2 212F      		mov r18,r17
+ 781 03e4 30E0      		ldi r19,lo8(0)
+ 782 03e6 402F      		mov r20,r16
+ 783 03e8 50E0      		ldi r21,lo8(0)
+ 784 03ea 4F5F      		subi r20,lo8(-(1))
+ 785 03ec 5F4F      		sbci r21,hi8(-(1))
+ 786 03ee 421B      		sub r20,r18
+ 787 03f0 530B      		sbc r21,r19
+ 788 03f2 81E0      		ldi r24,lo8(1)
+ 789 03f4 90E0      		ldi r25,hi8(1)
+ 790 03f6 00C0      		rjmp 2f
+ 791 03f8 880F      	1:	lsl r24
+ 792 03fa 991F      		rol r25
+ 793 03fc 1A95      	2:	dec r17
+ 794 03fe 02F4      		brpl 1b
+ 795               	.LVL99:
+ 796 0400 0197      		sbiw r24,1
+ 797 0402 042E      		mov r0,r20
+ 798 0404 00C0      		rjmp 2f
+ 799 0406 880F      	1:	lsl r24
+ 800 0408 991F      		rol r25
+ 801 040a 0A94      	2:	dec r0
+ 802 040c 02F4      		brpl 1b
+ 803               	.LM67:
+ 804 040e 2F2D      		mov r18,r15
+ 805 0410 30E0      		ldi r19,lo8(0)
+ 806               	.LVL100:
+ 807 0412 00C0      		rjmp 2f
+ 808 0414 220F      	1:	lsl r18
+ 809 0416 331F      		rol r19
+ 810 0418 4A95      	2:	dec r20
+ 811 041a 02F4      		brpl 1b
+ 812               	.LVL101:
+ 813               	.LM68:
+ 814 041c 682F      		mov r22,r24
+ 815               	.LVL102:
+ 816 041e 6095      		com r22
+ 817 0420 4981      		ldd r20,Y+1
+ 818 0422 6423      		and r22,r20
+ 819 0424 8223      		and r24,r18
+ 820 0426 682B      		or r22,r24
+ 821 0428 6983      		std Y+1,r22
+ 822               	.LM69:
+ 823 042a 8E2D      		mov r24,r14
+ 824               	.LVL103:
+ 825 042c 00D0      		rcall mpu6050_writeByte
+ 826               	.LVL104:
+ 827               	.L33:
+ 828               	/* epilogue start */
+ 829               	.LBE52:
+ 830               	.LBE51:
+ 831               	.LM70:
+ 832 042e 0F90      		pop __tmp_reg__
+ 833 0430 CF91      		pop r28
+ 834 0432 DF91      		pop r29
+ 835 0434 1F91      		pop r17
+ 836               	.LVL105:
+ 837 0436 0F91      		pop r16
+ 838               	.LVL106:
+ 839 0438 FF90      		pop r15
+ 840               	.LVL107:
+ 841 043a EF90      		pop r14
+ 842               	.LVL108:
+ 843 043c 0895      		ret
+ 844               	.LFE12:
+ 846               	.global	mpu6050_init
+ 848               	mpu6050_init:
+ 849               	.LFB17:
+ 850               	.LM71:
+ 851               	/* prologue: function */
+ 852               	/* frame size = 0 */
+ 853               	.LM72:
+ 854 043e 00D0      		rcall i2c_init
+ 855               	.LBB53:
+ 856               	.LBB54:
+ 857               	.LBB55:
+ 858               	.LBB56:
+ 859               	.LM73:
+ 860 0440 8AE1      		ldi r24,lo8(26)
+ 861               	.LVL109:
+ 862               	/* #APP */
+ 863               	 ;  83 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 864 0442 8A95      		1: dec r24
+ 865 0444 01F4      		brne 1b
+ 866               	 ;  0 "" 2
+ 867               	/* #NOAPP */
+ 868 0446 88EE      		ldi r24,lo8(1000)
+ 869 0448 93E0      		ldi r25,hi8(1000)
+ 870               	.LVL110:
+ 871               	.LBE56:
+ 872               	.LBE55:
+ 873               	.LBE54:
+ 874               	.LBE53:
+ 875               	.LBB57:
+ 876               	.LBB58:
+ 877               	.LBB59:
+ 878               	.LBB60:
+ 879               	.LM74:
+ 880 044a 28EC      		ldi r18,lo8(200)
+ 881 044c 30E0      		ldi r19,hi8(200)
+ 882               	.L35:
+ 883 044e F901      		movw r30,r18
+ 884               	.LVL111:
+ 885               	/* #APP */
+ 886               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 887 0450 3197      		1: sbiw r30,1
+ 888 0452 01F4      		brne 1b
+ 889               	 ;  0 "" 2
+ 890               	/* #NOAPP */
+ 891               	.LBE60:
+ 892               	.LBE59:
+ 893               	.LM75:
+ 894 0454 0197      		sbiw r24,1
+ 895               	.LM76:
+ 896 0456 01F4      		brne .L35
+ 897               	.LBE58:
+ 898               	.LBE57:
+ 899               	.LM77:
+ 900 0458 00D0      		rcall mpu6050_setSleepDisabled
+ 901               	.LVL112:
+ 902               	.LBB61:
+ 903               	.LBB62:
+ 904               	.LBB63:
+ 905               	.LBB64:
+ 906               	.LM78:
+ 907 045a 80E2      		ldi r24,lo8(20000)
+ 908 045c 9EE4      		ldi r25,hi8(20000)
+ 909               	.LVL113:
+ 910               	/* #APP */
+ 911               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 912 045e 0197      		1: sbiw r24,1
+ 913 0460 01F4      		brne 1b
+ 914               	 ;  0 "" 2
+ 915               	/* #NOAPP */
+ 916               	.LBE64:
+ 917               	.LBE63:
+ 918               	.LBE62:
+ 919               	.LBE61:
+ 920               	.LM79:
+ 921 0462 8BE6      		ldi r24,lo8(107)
+ 922               	.LVL114:
+ 923 0464 62E0      		ldi r22,lo8(2)
+ 924 0466 43E0      		ldi r20,lo8(3)
+ 925 0468 21E0      		ldi r18,lo8(1)
+ 926 046a 00D0      		rcall mpu6050_writeBits
+ 927               	.LM80:
+ 928 046c 8AE1      		ldi r24,lo8(26)
+ 929 046e 62E0      		ldi r22,lo8(2)
+ 930 0470 43E0      		ldi r20,lo8(3)
+ 931 0472 23E0      		ldi r18,lo8(3)
+ 932 0474 00D0      		rcall mpu6050_writeBits
+ 933               	.LM81:
+ 934 0476 89E1      		ldi r24,lo8(25)
+ 935 0478 64E0      		ldi r22,lo8(4)
+ 936 047a 00D0      		rcall mpu6050_writeByte
+ 937               	.LM82:
+ 938 047c 8BE1      		ldi r24,lo8(27)
+ 939 047e 64E0      		ldi r22,lo8(4)
+ 940 0480 42E0      		ldi r20,lo8(2)
+ 941 0482 23E0      		ldi r18,lo8(3)
+ 942 0484 00D0      		rcall mpu6050_writeBits
+ 943               	.LM83:
+ 944 0486 8CE1      		ldi r24,lo8(28)
+ 945 0488 64E0      		ldi r22,lo8(4)
+ 946 048a 42E0      		ldi r20,lo8(2)
+ 947 048c 20E0      		ldi r18,lo8(0)
+ 948 048e 00D0      		rcall mpu6050_writeBits
+ 949               	/* epilogue start */
+ 950               	.LM84:
+ 951 0490 0895      		ret
+ 952               	.LFE17:
+ 954               	.global	mpu6050_readBit
+ 956               	mpu6050_readBit:
+ 957               	.LFB11:
+ 958               	.LM85:
+ 959               	.LVL115:
+ 960 0492 FF92      		push r15
+ 961 0494 0F93      		push r16
+ 962 0496 1F93      		push r17
+ 963 0498 DF93      		push r29
+ 964 049a CF93      		push r28
+ 965 049c 0F92      		push __tmp_reg__
+ 966 049e CDB7      		in r28,__SP_L__
+ 967 04a0 DEB7      		in r29,__SP_H__
+ 968               	/* prologue: function */
+ 969               	/* frame size = 1 */
+ 970 04a2 F62E      		mov r15,r22
+ 971 04a4 8A01      		movw r16,r20
+ 972               	.LM86:
+ 973 04a6 BE01      		movw r22,r28
+ 974               	.LVL116:
+ 975 04a8 6F5F      		subi r22,lo8(-(1))
+ 976 04aa 7F4F      		sbci r23,hi8(-(1))
+ 977 04ac 00D0      		rcall mpu6050_readByte
+ 978               	.LVL117:
+ 979               	.LM87:
+ 980 04ae 21E0      		ldi r18,lo8(1)
+ 981 04b0 30E0      		ldi r19,hi8(1)
+ 982 04b2 00C0      		rjmp 2f
+ 983 04b4 220F      	1:	lsl r18
+ 984 04b6 331F      		rol r19
+ 985 04b8 FA94      	2:	dec r15
+ 986 04ba 02F4      		brpl 1b
+ 987 04bc 9981      		ldd r25,Y+1
+ 988               	.LVL118:
+ 989 04be 9223      		and r25,r18
+ 990               	.LVL119:
+ 991 04c0 F801      		movw r30,r16
+ 992 04c2 9083      		st Z,r25
+ 993               	/* epilogue start */
+ 994               	.LM88:
+ 995 04c4 0F90      		pop __tmp_reg__
+ 996 04c6 CF91      		pop r28
+ 997 04c8 DF91      		pop r29
+ 998 04ca 1F91      		pop r17
+ 999 04cc 0F91      		pop r16
+ 1000               	.LVL120:
+ 1001 04ce FF90      		pop r15
+ 1002               	.LVL121:
+ 1003 04d0 0895      		ret
+ 1004               	.LFE11:
+ 1006               	.global	mpu6050_readBits
+ 1008               	mpu6050_readBits:
+ 1009               	.LFB10:
+ 1010               	.LM89:
+ 1011               	.LVL122:
+ 1012 04d2 EF92      		push r14
+ 1013 04d4 FF92      		push r15
+ 1014 04d6 0F93      		push r16
+ 1015 04d8 1F93      		push r17
+ 1016 04da DF93      		push r29
+ 1017 04dc CF93      		push r28
+ 1018 04de 0F92      		push __tmp_reg__
+ 1019 04e0 CDB7      		in r28,__SP_L__
+ 1020 04e2 DEB7      		in r29,__SP_H__
+ 1021               	/* prologue: function */
+ 1022               	/* frame size = 1 */
+ 1023 04e4 062F      		mov r16,r22
+ 1024 04e6 142F      		mov r17,r20
+ 1025 04e8 7901      		movw r14,r18
+ 1026               	.LM90:
+ 1027 04ea 4423      		tst r20
+ 1028 04ec 01F4      		brne .L41
+ 1029               	.LVL123:
+ 1030 04ee 60E0      		ldi r22,lo8(0)
+ 1031               	.LVL124:
+ 1032 04f0 00C0      		rjmp .L42
+ 1033               	.LVL125:
+ 1034               	.L41:
+ 1035               	.LBB65:
+ 1036               	.LM91:
+ 1037 04f2 BE01      		movw r22,r28
+ 1038 04f4 6F5F      		subi r22,lo8(-(1))
+ 1039 04f6 7F4F      		sbci r23,hi8(-(1))
+ 1040 04f8 00D0      		rcall mpu6050_readByte
+ 1041               	.LVL126:
+ 1042 04fa 682F      		mov r22,r24
+ 1043               	.LVL127:
+ 1044 04fc 8823      		tst r24
+ 1045 04fe 01F0      		breq .L42
+ 1046               	.LVL128:
+ 1047               	.LBB66:
+ 1048               	.LM92:
+ 1049 0500 812F      		mov r24,r17
+ 1050               	.LVL129:
+ 1051 0502 90E0      		ldi r25,lo8(0)
+ 1052 0504 402F      		mov r20,r16
+ 1053 0506 50E0      		ldi r21,lo8(0)
+ 1054 0508 4F5F      		subi r20,lo8(-(1))
+ 1055 050a 5F4F      		sbci r21,hi8(-(1))
+ 1056 050c 481B      		sub r20,r24
+ 1057 050e 590B      		sbc r21,r25
+ 1058               	.LM93:
+ 1059 0510 21E0      		ldi r18,lo8(1)
+ 1060 0512 30E0      		ldi r19,hi8(1)
+ 1061 0514 00C0      		rjmp 2f
+ 1062 0516 220F      	1:	lsl r18
+ 1063 0518 331F      		rol r19
+ 1064 051a 1A95      	2:	dec r17
+ 1065 051c 02F4      		brpl 1b
+ 1066               	.LVL130:
+ 1067 051e 2150      		subi r18,lo8(-(-1))
+ 1068 0520 3040      		sbci r19,hi8(-(-1))
+ 1069 0522 042E      		mov r0,r20
+ 1070 0524 00C0      		rjmp 2f
+ 1071 0526 220F      	1:	lsl r18
+ 1072 0528 331F      		rol r19
+ 1073 052a 0A94      	2:	dec r0
+ 1074 052c 02F4      		brpl 1b
+ 1075 052e 8981      		ldd r24,Y+1
+ 1076               	.LVL131:
+ 1077 0530 8223      		and r24,r18
+ 1078               	.LVL132:
+ 1079 0532 90E0      		ldi r25,lo8(0)
+ 1080 0534 00C0      		rjmp 2f
+ 1081 0536 9595      	1:	asr r25
+ 1082 0538 8795      		ror r24
+ 1083 053a 4A95      	2:	dec r20
+ 1084 053c 02F4      		brpl 1b
+ 1085               	.LVL133:
+ 1086               	.LM94:
+ 1087 053e F701      		movw r30,r14
+ 1088 0540 8083      		st Z,r24
+ 1089               	.LVL134:
+ 1090               	.L42:
+ 1091               	.LBE66:
+ 1092               	.LBE65:
+ 1093               	.LM95:
+ 1094 0542 862F      		mov r24,r22
+ 1095               	.LVL135:
+ 1096               	/* epilogue start */
+ 1097 0544 0F90      		pop __tmp_reg__
+ 1098 0546 CF91      		pop r28
+ 1099 0548 DF91      		pop r29
+ 1100 054a 1F91      		pop r17
+ 1101               	.LVL136:
+ 1102 054c 0F91      		pop r16
+ 1103               	.LVL137:
+ 1104 054e FF90      		pop r15
+ 1105 0550 EF90      		pop r14
+ 1106               	.LVL138:
+ 1107 0552 0895      		ret
+ 1108               	.LFE10:
+ 1110               	.global	mpu6050_testConnection
+ 1112               	mpu6050_testConnection:
+ 1113               	.LFB16:
+ 1114               	.LM96:
+ 1115               	/* prologue: function */
+ 1116               	/* frame size = 0 */
+ 1117               	.LM97:
+ 1118 0554 85E7      		ldi r24,lo8(117)
+ 1119 0556 66E0      		ldi r22,lo8(6)
+ 1120 0558 46E0      		ldi r20,lo8(6)
+ 1121 055a 20E0      		ldi r18,lo8(buffer)
+ 1122 055c 30E0      		ldi r19,hi8(buffer)
+ 1123 055e 00D0      		rcall mpu6050_readBits
+ 1124               	.LM98:
+ 1125 0560 8091 0000 		lds r24,buffer
+ 1126 0564 90E0      		ldi r25,lo8(0)
+ 1127 0566 8433      		cpi r24,lo8(52)
+ 1128 0568 01F4      		brne .L45
+ 1129 056a 91E0      		ldi r25,lo8(1)
+ 1130               	.L45:
+ 1131               	.LM99:
+ 1132 056c 892F      		mov r24,r25
+ 1133               	/* epilogue start */
+ 1134 056e 0895      		ret
+ 1135               	.LFE16:
+ 1137               		.comm buffer,14,1
+ 1266               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mpu6050.c
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:2      *ABS*:0000003f __SREG__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:3      *ABS*:0000003e __SP_H__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:4      *ABS*:0000003d __SP_L__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:5      *ABS*:00000034 __CCP__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:18     .text:00000000 mpu6050_writeBytes
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:85     .text:00000046 mpu6050_writeByte
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:115    .text:00000064 mpu6050_readBytes
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:231    .text:000000dc mpu6050_getRawData
+                            *COM*:0000000e buffer
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:358    .text:000001b0 mpu6050_getConvData
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:614    .text:0000033a mpu6050_readByte
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:633    .text:00000342 mpu6050_writeBit
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:709    .text:000003a2 mpu6050_setSleepEnabled
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:726    .text:000003ac mpu6050_setSleepDisabled
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:743    .text:000003b6 mpu6050_writeBits
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:848    .text:0000043e mpu6050_init
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:956    .text:00000492 mpu6050_readBit
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:1008   .text:000004d2 mpu6050_readBits
+C:\Users\vladi\AppData\Local\Temp/cc0ZFLzl.s:1112   .text:00000554 mpu6050_testConnection
+
+UNDEFINED SYMBOLS
+i2c_start
+i2c_write
+i2c_stop
+i2c_readNak
+i2c_readAck
+__floatsisf
+__mulsf3
+__divsf3
+i2c_init
+__do_clear_bss
